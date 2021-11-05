@@ -1,7 +1,27 @@
+const allMovies = [
+  {
+    id: 1,
+    title: 'Spiderman',
+    img: '',
+    synopsis: 'Spiderman is Spiderman.',
+    rating: 4,
+    year: 2002,
+  },
+  {
+    id: 2,
+    title: 'Superman',
+    img: '',
+    synopsis: 'Superman is not Spiderman.',
+    rating: 3,
+    year: 2015,
+  },
+]
+
 const express = require('express')
 const serverLog = require('./serverLog')
 const app = express()
 const port = 8080
+const moviesRouter = require('./routers/movies-router')
 
 app.use(serverLog)
 
@@ -11,6 +31,7 @@ app.use(
     extended: true,
   })
 )
+app.use('/movies', moviesRouter)
 
 app.post('/', (req, res, next) => {
   console.log(req.body)
@@ -24,24 +45,6 @@ app.get('/', (req, res, next) => {
   res.status('200').json({
     server: '1.0.0',
     name: 'nodejs-api-server',
-  })
-})
-
-app.get('/query', (req, res, next) => {
-  console.log(req.query)
-
-  const { test } = req.query
-  res.json({
-    queryParams: req.query,
-    test: test,
-  })
-})
-
-app.get('/query/test/:number', (req, res, next) => {
-  console.log(req.params)
-
-  res.status('200').json({
-    params: req.params,
   })
 })
 

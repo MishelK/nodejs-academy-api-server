@@ -1,4 +1,13 @@
 const express = require('express')
+const {
+  getMovies,
+  getById,
+  createMovie,
+  upsertMovie,
+  modifyMovie,
+  deleteMovie,
+} = require('../controllers/movies-controller')
+
 const moviesRouter = express.Router()
 
 moviesRouter.get('/', getMovies) // Get all movies

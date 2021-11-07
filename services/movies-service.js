@@ -11,6 +11,10 @@ function getById(id) {
   return getAllMovies().find((movie) => movie.id === id)
 }
 
+function getByTitle(title) {
+  return getAllMovies().find((movie) => movie.title === title)
+}
+
 function createMovie({ title, img, synopsis, rating, year }) {
   const newMovie = {
     id: getNextIndex(),
@@ -25,6 +29,16 @@ function createMovie({ title, img, synopsis, rating, year }) {
   return newMovie
 }
 
+function deleteMovie(id) {
+  const movie = getAllMovies()[id - 1]
+  if (!!movie) {
+    getAllMovies().splice(id - 1, 1)
+    return movie
+  } else {
+    return null
+  }
+}
+
 function init() {
   allMovies = [...INITIAL_MOVIES.movies]
   currentIndex = allMovies[allMovies.length - 1].id
@@ -36,4 +50,4 @@ function getNextIndex() {
 
 init()
 
-module.exports = { getAllMovies, getById, createMovie, init }
+module.exports = { getAllMovies, getById, getByTitle, createMovie, deleteMovie, init }

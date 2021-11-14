@@ -14,7 +14,6 @@ function getMovies(request, response) {
     limit = parseInt(limit, 10)
     relevantMovies = relevantMovies.slice(0, limit)
   }
-
   return response.status(200).json({ movies: relevantMovies, total: relevantMovies.length })
 }
 
@@ -79,11 +78,12 @@ function upsertMovie(request, response) {
     movie.rating = rating
     movie.year = year
     if (img) movie.img = img
+    return response.status(200).json(movie)
   } else {
     // Movie does not exist, create a new one and return it
-    movie = MoviesService.createMovie(title, img, synopsis, rating, year)
+    movie = MoviesService.createMovie({ title, img, synopsis, rating, year })
+    return response.status(201).json(movie)
   }
-  return response.status(200).json(movie)
 }
 
 function modifyMovie(request, response) {
@@ -109,7 +109,7 @@ function deleteMovie(request, response) {
   const movieId = parseInt(id, 10)
   let movie = MoviesService.deleteMovie(movieId)
 
-  if (!!move) {
+  if (!!movie) {
     // Movie exists, and was deleted, return it
     return response.status(200).json(movie)
   } else {

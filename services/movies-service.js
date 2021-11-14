@@ -30,13 +30,15 @@ function createMovie({ title, img, synopsis, rating, year }) {
 }
 
 function deleteMovie(id) {
-  const movie = getAllMovies()[id - 1]
-  if (!!movie) {
-    getAllMovies().splice(id - 1, 1)
-    return movie
-  } else {
-    return null
+  const movie = getById(id)
+  if (movie) {
+    const movieIndex = allMovies.indexOf(movie)
+    const newAllMovies = [...allMovies]
+    newAllMovies.splice(movieIndex, 1)
+    allMovies = newAllMovies
   }
+
+  return movie
 }
 
 function init() {
